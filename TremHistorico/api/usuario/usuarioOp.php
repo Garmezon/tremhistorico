@@ -113,7 +113,7 @@ if($acao_usuario === 'cadastro'){
 else if($acao_usuario === 'login'){
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        if(session_id() != NULL){
+        if(!isset($_COOKIE["PHPSESSID"])){
                 
             $email = $_POST['email'];
             $senha = $_POST['senha'];
