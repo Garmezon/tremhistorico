@@ -109,10 +109,17 @@
                     let viagem_DataTime = element.data;
                     let viagem_valor = element.valor;
                     let viagem_quantidade_assentos = element.quantidade_assentos; 
+                    let viagem_id = element.id;
 
                     let viagens_display_caixa = document.getElementById("viagem-caixa");
                     let caixa_viagem = document.createElement("div");
                     let caixa_dentro = document.createElement("p");
+                    let botao_caixa = document.createElement("button");
+
+                    botao_caixa.innerText = "Agendar viagem";
+
+                    botao_caixa.setAttribute("onclick",`agendarViagem(${viagem_id})`);
+
                     caixa_dentro.innerText = `data: ${viagem_DataTime} valor: ${viagem_valor} passagens disponiveis: ${viagem_quantidade_assentos} `;
 
                     caixa_viagem.appendChild(caixa_dentro);
@@ -130,6 +137,22 @@
                 }
             })
             .catch(error => console.error('Erro:',error));
+
+            function agendarViagem(id){
+
+
+
+                fetch("../api/rotas/entregaViagem.php?a=agendarviagemUser", {
+                    method: "POST",
+                    body: JSON.stringify({ 'ID_VIAGEM' : id })
+                })
+                .then(response => response.json)
+                .then(data => {
+                    console.log(data)
+                })
+                .catch(error => console.error('Erro: ', error));
+
+            }
         }
         
     </script>

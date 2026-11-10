@@ -127,7 +127,7 @@ else if($acao_usuario === 'login'){
         else {
             $p = [
             'sql' => FALSE,
-            'numeroCode' => '-1',
+            'numeroCode' => '1',
             'erro' => "Você já está logado"
             ];
  
