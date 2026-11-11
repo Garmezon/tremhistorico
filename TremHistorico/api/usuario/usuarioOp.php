@@ -1,5 +1,7 @@
 <?php
 // -67 => Email nao esta formatado corretamente
+// -1 => Não está logado
+//  1 => Já está logado
 
 $conn = mysqli_connect("localhost:3306","root","","trem_historico");
 
@@ -138,6 +140,55 @@ else if($acao_usuario === 'login'){
 
     }
 
+}
+else if($acao_usuario === 'deletarUser'){
+        if($_SERVER["REQUEST_METHOD"] == "DELETE"){
+
+        if(isset($_COOKIE["PHPSESSID"])){
+
+            $id_usuario = isset($_SESSION["ID_USUARIO"]) ? $_SESSION["ID_USUARIO"] : NULL;
+
+            if($id_usuario != NULL){
+
+                $idVIAGEMUSUARIO = '';
+
+                $query = $conn->prepare("SELECT * FROM viagem_usuario WHERE id_usuario = ?");
+                $query->bind_param("i", $id_usuario);
+                $query->execute();
+
+                $query->store_result();
+                $query->bind_result($idVIAGEMUSUARIO);
+
+                if($query->num_rows > 0){
+                    $query_delete_viagem = $conn->prepare("DELETE FROM usuario WHERE id_usuario = ?");
+                    $query_delete_viagem->bind_param("i",$id_VIAGEMUSUARIO);
+                    $query_delete_viagem->execute();
+                }
+
+
+                
+                $query_delete = $conn-> prepare("DELETE FROM usuario WHERE id = ?");
+                $query_delete-> bind_param("i", $id_usuario);
+                $query_delete-> execute(); 
+            }
+            else{
+                die('ID_USUARIO não definido');
+            }
+
+        }
+        else {
+            $p = [
+            'sql' => FALSE,
+            'numeroCode' => '-1',
+            'erro' => "Você não está logado"
+            ];
+ 
+        }
+
+        echo json_encode($p);
+
+
+    }
 }
 
 ?>

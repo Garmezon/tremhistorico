@@ -72,10 +72,11 @@
             }) 
             .catch(error => console.error('Erro:', error));
 
+
         }
 
 
-        function getViagens(){
+    function getViagens(){
 
             let inicial = PontoPartida.value; let final = PontoDestino.value;
             // pegamos o valor que o usuario selecionou
@@ -115,14 +116,21 @@
                     let caixa_viagem = document.createElement("div");
                     let caixa_dentro = document.createElement("p");
                     let botao_caixa = document.createElement("button");
+                    let botao_cancelar = document.createElement("button");
 
+                    botao_cancelar.innerText = "Cancelar viagem"
                     botao_caixa.innerText = "Agendar viagem";
+
+                    botao_cancelar.setAttribute("onclick",`cancelarViagem(${viagem_id})`);
 
                     botao_caixa.setAttribute("onclick",`agendarViagem(${viagem_id})`);
 
                     caixa_dentro.innerText = `data: ${viagem_DataTime} valor: ${viagem_valor} passagens disponiveis: ${viagem_quantidade_assentos} `;
 
                     caixa_viagem.appendChild(caixa_dentro);
+                    caixa_viagem.appendChild(botao_caixa);
+                    caixa_viagem.appendChild(botao_cancelar);
+
                     caixa_viagem.setAttribute('id','gerado-caixa-viagem');
 
                     viagens_display_caixa.appendChild(caixa_viagem);
@@ -138,22 +146,41 @@
             })
             .catch(error => console.error('Erro:',error));
 
-            function agendarViagem(id){
-
-
-
-                fetch("../api/rotas/entregaViagem.php?a=agendarviagemUser", {
-                    method: "POST",
-                    body: JSON.stringify({ 'ID_VIAGEM' : id })
-                })
-                .then(response => response.json)
-                .then(data => {
-                    console.log(data)
-                })
-                .catch(error => console.error('Erro: ', error));
-
-            }
         }
+
+        function agendarViagem(id){
+
+            formID= new FormData;
+
+            formID.append('ID_VIAGEM', id);
+
+            fetch("../api/rotas/AgendarViagem.php?a=agendarviagemUser", {
+                method: "POST",
+                body: formID 
+            })
+            .then(response => response.json)
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => console.error('Erro: ', error));
+
+        }
+
+        
+        function cancelarViagem(id){
+
+            // Cancela a viagem
+            fetch(`../api/rotas/AgendarViagem.php?a=cancelarviagemUser&d=${id}`, {
+                method: "DELETE"
+            })
+            .then(response => response.json)
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => console.error('Erro: ', error));
+
+        }
+        
         
     </script>
 

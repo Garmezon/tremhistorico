@@ -33,15 +33,7 @@
                     $rota_lista = array();
 
                     while($row_viagem = mysqli_fetch_assoc($viagem_result)){
-                        $tremQuery = "SELECT trem.id, trem.nome, sum(v.quantidade_assentos) as quantidade_pessoas FROM trem 
-                                inner join trem_maquinario as tm
-                                on tm.id_trem = trem.id
-                                inner join trem_vagao as tv
-                                on tv.id_trem = trem.id
-                                inner join vagao as v
-                                on v.id = tv.id_vagao
-                                GROUP BY trem.id
-                                HAVING trem.id = {$row_viagem['id_trem']};";
+                        $tremQuery = "SELECT * FROM trem_informacoes WHERE id = {$row_viagem['id_trem']};";
 
                         $tremLinha = mysqli_query($conn, $tremQuery);
                         $tremColuna = mysqli_fetch_assoc($tremLinha);
