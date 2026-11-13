@@ -27,34 +27,35 @@ CREATE TABLE vagao (
 
 CREATE TABLE estacao(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    nome varchar(50)
+    nome varchar(50) NOT NULL
 );
 
 CREATE TABLE rota(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    id_entrada INT,
-    id_saida INT,
+    id_entrada INT NOT NULL,
+    id_saida INT NOT NULL,
   	FOREIGN KEY (id_saida) REFERENCES estacao(id),
     FOREIGN KEY (id_entrada) REFERENCES estacao(id)
 );
 
 CREATE TABLE trem (
     id INT AUTO_INCREMENT  PRIMARY KEY,
-   	nome varchar(30)
+   	nome varchar(30) NOT NULL,
+    url varchar(255) NOT NULL
 );
 
 CREATE TABLE trem_vagao(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    id_vagao INT,
-    id_trem INT,
+    id_vagao INT NOT NULL,
+    id_trem INT NOT NULL,
     FOREIGN KEY (id_vagao) REFERENCES vagao(id),
     FOREIGN KEY (id_trem) REFERENCES trem(id)
 );
 
 CREATE TABLE trem_maquinario(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    id_maquinario INT,
-    id_trem INT,
+    id_maquinario INT NOT NULL,
+    id_trem INT NOT NULL,
     FOREIGN KEY (id_maquinario) REFERENCES maquinario(id),
     FOREIGN KEY (id_trem) REFERENCES trem(id)
 );
@@ -66,13 +67,13 @@ CREATE TABLE viagem (
 	id_rota INT NOT NULL,	
     data_time  DATETIME     NOT NULL,
     valor      DECIMAL(10,2) NOT NULL,
-    id_trem    INT,
+    id_trem    INT NOT NULL,
     FOREIGN KEY (id_rota) REFERENCES rota(id)
 );
 
 CREATE TABLE viagem_usuario (
     id          INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario  INT NOT NULL,
+    id_usuario  INT NOT NULL UNIQUE,
     id_viagem   INT NOT NULL
 );
 
@@ -94,4 +95,3 @@ ALTER TABLE usuario ADD CONSTRAINT chk_tamanho_cpf CHECK (LENGTH(cpf) = 11);
 
 ALTER TABLE usuario
 ADD CONSTRAINT chk_tamanho_celular CHECK (LENGTH(numero_celular) = 11);
-
