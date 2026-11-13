@@ -1,137 +1,47 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="../css/font/stylesheet.css">
+        <link rel="stylesheet" href="../css/geral.css">
+
+        <script src="../js/generico.js" defer></script>
+        <script src="../js/pegarNomeUser.js" defer></script>
+
     </head>
 
     <body>
-
-        <div>
-        <iframe name="nada" id="nada" style="display: none;"></iframe>
-        <p>Escolha seu ponto de partida</p>
-
-            <select name="viagens" class="seletor-estacao" id="destino-inicial">
-                <option value="-1"> Escolha o seu ponto de partida</option>
-            </select>
-        
-            <p>Escolha seu destino</p>
-            <select name="viagens-destino" class="seletor-estacao" id="destino-destino">
-                <option value="-1"> Escolha seu destino</option>
-            </select>
-            <br><br>
-            <button class="submit_button" onclick="getViagens()" type="submit">Encontrar Viagens</button>
+        <div class="header">
+            <span style="font-size: 10px; margin-left: -300px; margin-right: 200px;" id="nome-usuario">visitante</span>
+            <button class="botao" onclick="window.location.href=''">HOME</button>
+            <button class="botao" onclick="window.location.href='../viagem'">VIAGEM</button>
+            <button class="botao" onclick="window.location.href='../contato'">CONTATO</button>
+            <button class="botao usuario-man" onclick="window.location.href='../usuario/login'">LOG-IN</button>
+            <button class="botao usuario-man" onclick="window.location.href='../usuario/cadastro'">CADASTRO</button>
         </div>
+
+        <div class="centraliza">
+            <div class="header meio" style="width: 1200px; height: 700px; margin-top: 6px;">
+                <p style="font-size: 30px;">Seja bem-vindo ao site trem historico!</p>
+                <p style="font-size: 20px; margin-left: 30px; margin-right: 10px; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                    Nossa organização se dedica a preservar a memória das antigas ferrovias paranaenses oferencendo viagens
+                    históricas em marias fumaças que realmente eram operadas naquela época.
+                    <br>
+                    <br>
+                    Veja em baixo nosso catalogo de locomotivas e visite a aba <b>Viagem</b> para agendar uma aventura inesquecível!
+                </p>
+            </div>
+        </div>
+
         
-        <div id="viagem-caixa">
-            
+        <div class="header final">
+            <span> Site feito para um trabalho de programação WEB para PUCPR</span>
         </div>
 
     </body>
 
     <script>
-
-        let PontoPartida = document.getElementById('destino-inicial');
-        PontoPartida.addEventListener("selectstart", getEstacao()); 
-
-        let PontoDestino = document.getElementById('destino-destino');
-        PontoDestino.addEventListener("selectstart", getEstacao()); 
-        
-        
-
-        function getEstacao(){
-            fetch('../api/rotas/entregaViagem.php?a=partida')
-            .then(response => response.json())
-            .then(data => {
-
-    
-            let seletorGerado = document.querySelectorAll('#gerado');
-            
-            seletorGerado.forEach(estacao =>{
-                    estacao.remove()
-            }
-             );
-
-            // -------------------------------------------
-            
-            data.forEach(element => {
-
-            let viagem = element.viagem;
-            let id = element.id;
-            // pega do backend as estacoes disponives
-        
-            let opcao = document.createElement("option");
-            opcao.setAttribute("value",id);
-            opcao.setAttribute("id","gerado");
-                
-            opcao.textContent = viagem;
-
-            PontoPartida.appendChild(opcao);
-            PontoDestino.appendChild(opcao.cloneNode(true));
-            // clone node copia a opcao para dar um append nela duas vezes
-            // De resto cria um objeto option pra colocar no seletor para fazer a selecao da viagem
-            });
-            }) 
-            .catch(error => console.error('Erro:', error));
-
-        }
-
-
-        function getViagens(){
-
-            let inicial = PontoPartida.value; let final = PontoDestino.value;
-            // pegamos o valor que o usuario selecionou
-
-            let formViagem = new FormData;
-            // criamos uma formdata para colocar esses dados dentro
-
-            formViagem.append('viagens', inicial);
-            
-            formViagem.append('viagens-destino',final);
-
-            // colocamos o dado dentro utilizando um append
-            
-            fetch('../api/rotas/entregaViagem.php?a=selecaousuario', {
-                method: "POST",
-                body: formViagem
-            })
-            .then(response => response.json())
-            .then(data => {
-
-                    
-                    let seletorGeradoCaixa = document.querySelectorAll('#gerado-caixa-viagem');
-                    seletorGeradoCaixa.forEach(viagem=>{
-                            viagem.remove()
-                    }
-                    );
-
-                    // -------------------------------------------
-                if(data != null){
-                data.forEach(element => {
-                    let viagem_DataTime = element.data;
-                    let viagem_valor = element.valor;
-                    let viagem_quantidade_assentos = element.quantidade_assentos; 
-
-                    let viagens_display_caixa = document.getElementById("viagem-caixa");
-                    let caixa_viagem = document.createElement("div");
-                    let caixa_dentro = document.createElement("p");
-                    caixa_dentro.innerText = `data: ${viagem_DataTime} valor: ${viagem_valor} passagens disponiveis: ${viagem_quantidade_assentos} `;
-
-                    caixa_viagem.appendChild(caixa_dentro);
-                    caixa_viagem.setAttribute('id','gerado-caixa-viagem');
-
-                    viagens_display_caixa.appendChild(caixa_viagem);
-
-                    
-                })
-                } else {
-                    let caixa_erro= document.createElement("p");
-                    caixa_erro.innerText = "Não existe rotas disponiveis com essa configuração";
-                    caixa_erro.setAttribute('id','gerado-caixa-viagem')
-                    document.body.appendChild(caixa_erro);
-                }
-            })
-            .catch(error => console.error('Erro:',error));
-        }
-        
+        UsuarioNome()
     </script>
+
 
 </html>

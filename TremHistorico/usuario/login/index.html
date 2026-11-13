@@ -1,55 +1,43 @@
 <html>
     <head>
         <meta charset="UTF-8">
-    </head>
+        <link rel="stylesheet" href="../../css/font/stylesheet.css">
+        <link rel="stylesheet" href="../../css/geral.css">
+
+        <script src="../../js/generico.js" defer></script>
+        <script src="../../js/usuario.js" defer></script>
+        <script src="../../js/pegarNomeUser_dupe.js" defer></script>
+
 
     <body>
-        <div>
-            <p>Faça Login</p>
-            <br>
-            <input type="email" id="email" placeholder="digite seu email">
-            <br>
-            <input type="password" id="senha" placeholder="digite sua senha">
-            <br>
-            <button onclick="EnviarInformacaoUsuario(LOGIN)">LOGUE</button>
+        <div class="header">
+            <span style="font-size: 10px; margin-left: -300px; margin-right: 200px;" id="nome-usuario">visitante</span>
+            <button class="botao" onclick="window.location.href='../../home'">HOME</button>
+            <button class="botao" onclick="window.location.href='../../viagem'">VIAGEM</button>
+            <button class="botao" onclick="window.location.href='../../contato'">CONTATO</button>
+            <button class="botao usuario-man" onclick="window.location.href=''">LOG-IN</button>
+            <button class="botao usuario-man" onclick="window.location.href='../cadastro'">CADASTRO</button>
+        </div>
+        <div class="centraliza">
+            <div class="header meio">
+                <p>Realize o Log-in</p>
+                <br>
+                <input type="email" id="email" class="botao cheio" placeholder="Digite seu E-mail">
+                <br>
+                <input type="password" id="senha" class="botao cheio" placeholder="Digite sua Senha">
+                <br>
+                <button class ="botao cheio" onclick="EnviarInformacaoUsuario(LOGIN)">LOGUE</button>
+            </div>
         </div>
 
+        <div class="header final">
+            <span> Site feito para um trabalho de programação WEB para PUCPR</span>
+        </div>
+        
 
     </body>
 
-    <script>
-        // Cadastro - false
-        // Login - true
 
-        const CADASTRO = false;
-        const LOGIN = true;
 
-        function EnviarInformacaoUsuario(tipo){
-            
-
-            let email = document.getElementById('email').value;
-            let senha = document.getElementById('senha').value;
-
-            let UsuarioInformacoes = new FormData;
-            UsuarioInformacoes.append('email',email);
-            UsuarioInformacoes.append('senha',senha);
-
-            let urlGet = tipo == LOGIN ? 'login' : 'cadastro'; 
-            
-            fetch(`../../api/usuario/usuarioOp.php?a=${urlGet}`,{
-                method: "POST",
-                body: UsuarioInformacoes
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error =>  console.error('Erro:',error));
-        
-            
-
-        }
-        
-    </script>
 
 </html>
