@@ -11,8 +11,10 @@ CREATE TABLE usuario (
     nome           VARCHAR(100) NOT NULL,
     cpf            CHAR(11)     NOT NULL UNIQUE,
     email          VARCHAR(100) NOT NULL UNIQUE,
-    numero_celular VARCHAR(15),
-    senha          VARCHAR(255) NOT NULL
+    numero_celular VARCHAR(15) NOT NULL,
+    senha          VARCHAR(255) NOT NULL,
+	CONSTRAINT chk_tamanho_cpf CHECK (LENGTH(cpf) = 11),
+	CONSTRAINT chk_tamanho_celular CHECK (LENGTH(numero_celular) = 11)
 );
 
 CREATE TABLE maquinario (
@@ -40,8 +42,7 @@ CREATE TABLE rota(
 
 CREATE TABLE trem (
     id INT AUTO_INCREMENT  PRIMARY KEY,
-   	nome varchar(30) NOT NULL,
-    url varchar(255) NOT NULL
+   	nome varchar(30) NOT NULL
 );
 
 CREATE TABLE trem_vagao(
@@ -67,7 +68,7 @@ CREATE TABLE viagem (
 	id_rota INT NOT NULL,	
     data_time  DATETIME     NOT NULL,
     valor      DECIMAL(10,2) NOT NULL,
-    id_trem    INT NOT NULL,
+    id_trem    INT NOT NULL, 
     FOREIGN KEY (id_rota) REFERENCES rota(id)
 );
 
@@ -75,6 +76,7 @@ CREATE TABLE viagem_usuario (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario  INT NOT NULL UNIQUE,
     id_viagem   INT NOT NULL
+
 );
 
 -- =========================================
@@ -91,12 +93,6 @@ ALTER TABLE viagem_usuario
     ADD CONSTRAINT fk_vu_viagem
     FOREIGN KEY (id_viagem) REFERENCES viagem(id);
 
-ALTER TABLE usuario ADD CONSTRAINT chk_tamanho_cpf CHECK (LENGTH(cpf) = 11);
-
-ALTER TABLE usuario
-ADD CONSTRAINT chk_tamanho_celular CHECK (LENGTH(numero_celular) = 11);
-
-
 
 CREATE VIEW trem_informacoes AS(
 SELECT trem.id, trem.nome, sum(v.quantidade_assentos) as quantidade_pessoas FROM trem 
@@ -108,6 +104,3 @@ inner join vagao as v
 on v.id = tv.id_vagao
 GROUP BY trem.id
 );
-
-
-
