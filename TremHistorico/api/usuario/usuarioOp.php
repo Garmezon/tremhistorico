@@ -2,7 +2,6 @@
 // -67 => Email nao esta formatado corretamente
 // -1 => Não está logado
 //  1 => Já está logado
-session_start();
 
 $conn = mysqli_connect("localhost:3306","root","","trem_historico");
 
@@ -190,10 +189,6 @@ else if($acao_usuario === 'deletarUser'){
 
 
     }
-}
-else if($acao_usuario === "RetornarNomeUsuario"){
-    $nomeUser = $_SESSION['nomeusuario'] ?? 'Visitante';
-    echo json_encode($nomeUser);
 }
 
 ?>
