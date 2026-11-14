@@ -95,3 +95,19 @@ ALTER TABLE usuario ADD CONSTRAINT chk_tamanho_cpf CHECK (LENGTH(cpf) = 11);
 
 ALTER TABLE usuario
 ADD CONSTRAINT chk_tamanho_celular CHECK (LENGTH(numero_celular) = 11);
+
+
+
+CREATE VIEW trem_informacoes AS(
+SELECT trem.id, trem.nome, sum(v.quantidade_assentos) as quantidade_pessoas FROM trem 
+inner join trem_maquinario as tm
+on tm.id_trem = trem.id
+inner join trem_vagao as tv
+on tv.id_trem = trem.id
+inner join vagao as v
+on v.id = tv.id_vagao
+GROUP BY trem.id
+);
+
+
+
