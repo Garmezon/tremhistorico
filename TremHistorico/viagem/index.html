@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" href="../css/font/stylesheet.css">
+        <link rel="stylesheet" href="../css/geral.css">
+
+        <script src="../js/generico.js" defer></script>
+        <script src="../js/viagem.js" defer></script>
+        <script src="../js/pegarNomeUser.js" defer></script>
+
+    </head>
+
+    <body>
+        <div class="header">
+            <span style="font-size: 10px; margin-left: -300px; margin-right: 200px;" id="nome-usuario">visitante</span>
+
+            <button class="botao" onclick="window.location.href='../home'">HOME</button>
+            <button class="botao" onclick="window.location.href=''">VIAGEM</button>
+            <button class="botao" onclick="window.location.href='../contato'">CONTATO</button>
+            <button class="botao usuario-man" onclick="window.location.href='../usuario/login'">LOG-IN</button>
+            <button class="botao usuario-man" onclick="window.location.href='../usuario/cadastro'">CADASTRO</button>
+        </div>
+
+        <div class="caixa-viagem-selecao">
+            <div class="agendar-secao">
+                <aside class="caixa">
+                    <p>Escolha seu ponto de partida</p>
+
+                    <select name="viagens" class="seletor-estacao" id="destino-inicial">
+                        <option value="-1"> Selecione...</option>
+                    </select>
+                
+                    <p>Escolha seu destino</p>
+                    <select name="viagens-destino" class="seletor-estacao" id="destino-destino">
+                        <option value="-1"> Selecione...</option>
+                    </select>
+                    <button class="botao cheio" id="submit_button" onclick="getViagens()" type="submit">Encontrar Viagens</button>
+                </aside>
+            </div>
+            
+            <div id="viagem-caixa">    
+
+            </div>
+        </div>
+            
+        <div class="header final">
+            <span> Site feito para um trabalho de programação WEB para PUCPR</span>
+        </div>
+    </body>
+
+
+</html>
